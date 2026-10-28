@@ -1,0 +1,83 @@
+{
+  "version": "1.0",
+  "source": "<KB_ROOT>/80-量化项目经理/50-测试方法/01-loop学习记录/ + qupm-loop/04-loop-learning-playbook.md",
+  "rules": [
+    {
+      "id": "R1",
+      "name": "每次新任务前读取已有loop学习记录",
+      "check": "on_task_start",
+      "severity": "block",
+      "trigger": "新filter/参数/回测任务开始",
+      "action": "读取 corrections/ 下所有规则 + <KB_ROOT>/01-loop学习记录/",
+      "error_case": "SMC/Chanlun测试时Agent未读已有记录，导致已知道教训被忽略"
+    },
+    {
+      "id": "R2",
+      "name": "复杂任务必须走完整OODA流程",
+      "check": "on_task_start",
+      "severity": "block",
+      "trigger": "任何多步执行、涉及判断的任务",
+      "action": "创建 work_ooda/ 目录，逐步骤写入 00-purpose.md → round-N.md → summary.md + state.md",
+      "error_case": "SMC/Chanlun测试直接执行无OODA记录，不可追溯"
+    },
+    {
+      "id": "R3",
+      "name": "从已有记录提取可复用模式，Verify时对照",
+      "check": "on_round_end",
+      "severity": "warn",
+      "trigger": "每轮Verify阶段",
+      "action": "加载 corrections/playbook.json 中 patterns 列表，对照检查",
+      "patterns": [
+        "两层验证法：段级别(统计规律) → 交易级别(PnL验证)",
+        "跨窗口 std < 10pp 硬门禁",
+        "单窗口结论必须标注警告",
+        "参数必须先确定基线 → 扫描 → 最优",
+        "事后补记录标记 [post-hoc]"
+      ],
+      "error_case": "Chanlun单窗口结论未标注警告，事后补记录未标记[post-hoc]"
+    },
+    {
+      "id": "R4",
+      "name": "每个新组件必须先做参数扫描",
+      "check": "on_round_start",
+      "severity": "block",
+      "trigger": "新filter/indicator/参数引入",
+      "action": "确定基线→定义扫描范围→跑全量扫描→找最优值→五窗口验证",
+      "param_scan_required": {
+        "min_values": 5,
+        "must_output": ["baseline", "range", "step", "optimal", "optimal_reason"]
+      },
+      "error_case": "SMC只用swing_length=10默认值下结论，用户追问后才补扫描"
+    },
+    {
+      "id": "R5",
+      "name": "必须五窗口全量验证",
+      "check": "on_round_end",
+      "severity": "block",
+      "trigger": "filter/indicator效果评估",
+      "windows_required": ["1M", "3M", "10M", "18M", "30M"],
+      "min_windows": 5,
+      "std_threshold": 10.0,
+      "action": "五窗口全跑→计算跨窗口std→std<10pp硬门禁",
+      "error_case": "Chanlun只跑1M+3M就下结论，czsc大窗口慢Agent偷懒"
+    },
+    {
+      "id": "R6",
+      "name": "OODA记录必须同步写入，禁止事后补",
+      "check": "on_round_end",
+      "severity": "warn",
+      "trigger": "OODA流程每一步",
+      "action": "每步完成后立即写文件，事后补的标记[post-hoc]并降级可信度",
+      "required_files": ["00-purpose.md", "state.md", "round-N.md"],
+      "error_case": "Agent事后补summary.md，无state.md和逐轮文件"
+    }
+  ],
+  "violation_checklist": [
+    "R1: 是否读取了 corrections/ 下所有规则？",
+    "R2: 是否创建了 work_ooda/ 并走完完整5步？",
+    "R3: 是否提取了可复用模式并在Verify时对照？",
+    "R4: 是否对每个新参数做了基线→扫描→最优？",
+    "R5: 是否五窗口全量？跨窗口std是否<10pp？",
+    "R6: 记录是否同步写入？有无[post-hoc]标记？"
+  ]
+}

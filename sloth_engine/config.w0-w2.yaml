@@ -1,0 +1,55 @@
+# Development-only profile. Never point the live runtime at this file.
+runtime:
+  root: "<RUNTIME_ROOT>/w0-w2"
+  db: "db/patterns.db"
+  io: "io/_data"
+  events: "runs"
+  logs: "logs"
+  state: "state/STATE.md"
+  handoff: "state/handoff.json"
+
+memory:
+  sqlite_path: "db/patterns.db"
+
+loop:
+  signals: "data/signals_dev.json"
+  batch_size: 2
+  max_rounds: 1
+  max_seconds: 120
+  no_progress_stop: 3
+  meta_analyze_every: 5
+  circuit_cooldown_seconds: 30
+
+backtest:
+  script: "backtest/mock_backtest.py"
+  timeout_sec: 30
+  extra_args: "--seed w0-w2"
+
+ooda:
+  enabled: true
+  uq_enabled: false
+  delta_enabled: true
+  annotation_enabled: true
+
+task:
+  name: "w0-w2-isolation-smoke"
+  success_criteria:
+    - metric: "trades_count"
+      operator: "gt"
+      threshold: 0
+  scope:
+    allow: ["data/", "backtest/", "sloth_engine/", "_data/"]
+    deny: ["secrets/", "keys/", "production/", ".env"]
+
+budget:
+  hard:
+    max_rounds: 1
+    max_runtime_minutes: 2
+    max_consecutive_failures: 2
+  soft:
+    max_tokens_per_round: 50000
+    max_sub_agents: 0
+
+stop:
+  completion: ["all_criteria_met", "max_rounds_reached"]
+  safety: ["budget_exhausted", "consecutive_failures", "denylist_hit"]

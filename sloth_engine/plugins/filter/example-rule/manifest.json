@@ -1,0 +1,1 @@
+{"id":"example-rule","version":"0.1.0","type":"filter","entry":"entry.py","extension_points":["hook:pre_entry"],"inject":[],"lazy":false,"description":"example pre-entry filter (observe-only demo)"}

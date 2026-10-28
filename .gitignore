@@ -1,0 +1,106 @@
+# Python environments and caches
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE and machine-local metadata
+.workbuddy/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Runtime state and generated outputs
+logs/
+runs/
+_data/
+*.log
+*.db
+*.db.*
+sloth_engine/STATE.md
+sloth_engine/data/handoff.json
+sloth_engine/sloth_engine/
+signal_driven_state.json
+work_ooda/
+
+# Downloaded or extracted reference repositories
+_downloads/
+docs/deepseek-harness-master/
+*.zip
+*.mhtml
+
+
+# Generated single-run artifacts
+sloth_engine/data/report.html
+
+# Machine-local config (each host keeps its own .obsidian.yaml)
+.obsidian.yaml
+
+
+# Machine-local pilot config (template is tracked; each host generates its own)
+sloth_engine/config.pilot-lh.yaml
+!sloth_engine/config.pilot-lh.yaml.example
+
+# PM task workspaces (per-task loop run working dirs, host-generated)
+projects/pm/*/workspace/
+# Per-task backtest I/O intermediates (regenerated each run, not source)
+projects/**/loop_backtest_input.json
+projects/**/loop_backtest_output.json
+
+# Mock/unit test per-task report dir (test_cli_once_report.py)
+projects/once-report-wb/
+
+projects/wb2-exit-code/
+
+
+projects/_wb1_arch/
+
+
+projects/_loop-test/
+
+
+projects/sandbox/
+
+# Designated temp script dir (gitignored contents; keep .gitkeep + README as convention)
+scripts/tmp/*
+!scripts/tmp/.gitkeep
+!scripts/tmp/README.md
+
+# plugin global shared store (runtime state, not source)
+rt/plugin-global/
+
+# pytest runtime temp workspaces (auto-recreated by tests)
+sloth_engine/tests/_tmp_*/
+
+# 临时归档残留（清理证据，不入库/不打包）
+_scratch_archive_*/
+_scratch_archive_*/
+
+# ===== GitHub/交付版排除（2026-10-14）=====
+# 挂载任务运行产物（本地私有，永不入库）
+projects/*
+!projects/pm/_template/
+!projects/pm/_template/**
+# sloth-loop 内部开发上下文/PM 接入规范（不入公开版本）
+docs/state/
+docs/PM框架-接入sloth-loop-流程规范.md
+# 第三方框架蒸馏笔记（私有，不入公开版本）
+docs/knowledge-distillation/
+# 真实依赖锁（本仓不提供真实锁，见 README 说明）
+uv.lock
+# 通用冗余
+*.bak
+*.bak-*
+
+# 归档 legacy 模块（tests 依赖：structured_cli / mcp_client）
+!sloth_engine/_archive/
+!sloth_engine/_archive/*.py
+# 一次性清理脚本（非源码）
+scripts/_archive_sloth_*.py
+# 内部发布清理 runbook（含敏感样例，不入公开版本）
+docs/sloth-loop-GitHub发布-Runbook-*.md
+# 运行产物兜底：根目录缺陷报告不得入库（正确落点在 workspace 或 runtime.root/projects/<name>/）
+/IMPROVEMENTS.md

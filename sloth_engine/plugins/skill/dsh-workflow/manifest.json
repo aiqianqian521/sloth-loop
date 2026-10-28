@@ -1,0 +1,1 @@
+{"id":"dsh-workflow","version":"0.1.0","type":"skill","entry":"entry.py","extension_points":["tool"],"inject":["workflow-dag"],"lazy":true,"description":"Python port of dsh_workflow (concept): generatable/savable/runnable workflow DAG"}

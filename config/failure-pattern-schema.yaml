@@ -1,0 +1,36 @@
+# 失败信号模式 - YAML Schema
+
+# 每条失败记录的结构定义
+# 存储位置: <KB_ROOT>\40-验证与风险\失败信号模式库.md
+
+- id: "F-YYYYMMDD-NNN"           # 唯一ID，格式F-日期-序号
+  date: "YYYY-MM-DD"               # 发现日期
+  signal_pattern: ""               # 信号类型描述（什么信号触发的）
+  market_condition: ""             # 市场条件描述（什么行情下发生的）
+  failure_mode: ""                 # 失败模式分类（见下方枚举）
+  impact:                          # 量化影响
+    trades: 0                      # 涉及交易数
+    win_rate: "0%"                 # 胜率
+    total_pnl: "0.00%"             # 总盈亏百分比
+    avg_holding: ""                # 平均持仓时间（可选）
+    stop_loss_distance: ""         # 止损距离（可选）
+    mfe_240h: ""                   # 240小时最大有利偏移（可选）
+    tp3_hit_rate_240h: ""          # 240小时TP3命中率（可选）
+  root_cause: ""                   # 根因描述（为什么失败）
+  solution: ""                     # 解决方案描述（做了什么修复）
+  verification: ""                 # 验证结果描述（怎么验证的）
+  status: ""                       # 状态：resolved|open|monitoring
+  exclusion_rule: ""               # 排除规则描述（下次回测如何自动排除）
+
+# failure_mode 枚举值：
+#   EXTREME_CHASE          - 极端位置追单
+#   ABSOLUTE_BLINDSPOT     - 绝对位置盲区
+#   STOPPED_OUT_FIRST      - 先止损后达标
+#   DIRECTION_BIAS         - 连续方向偏移
+#   RANGING_FAKEOUT        - 震荡假突破
+#   INSUFFICIENT_EVIDENCE  - 证据不足入场
+
+# status 枚举值：
+#   resolved    - 已修复，排除规则生效
+#   open        - 新发现，尚未制定排除规则
+#   monitoring  - 观察中，规则有条件生效

@@ -1,0 +1,54 @@
+# Global plugin configuration - SINGLE SOURCE OF TRUTH (sloth-loop v4 plugin-ification).
+# Re: "plugins should be globally enabled, shared across all tasks".
+#
+# Mechanism truth: backtest_adapter runs wrapper.py in a SUBPROCESS, so the
+# orchestrator's in-memory PluginHost does not cross into the wrapper. "Global +
+# shared" is therefore realized as:
+#   - roster defined ONCE here;
+#   - persistent shared stores at fixed paths (mneme/kb/events) -> cross-task +
+#     cross-run memory/RAG accumulation (loop essence at a larger scale);
+#   - orchestrator AND every analysis wrapper each reconstruct a PluginHost from
+#     THIS SAME config (per-process instances, SHARED config + SHARED stores).
+#
+# Category boundary (NOT a per-task switch): the deterministic sim subprocess
+# (paper_trading_simulator, BASE2) is NEVER given plugins (determinism invariant).
+# Analysis/decision tier (orchestrator OODA + analysis wrappers) uses plugins.
+store_root: "rt/plugin-global"
+plugins:
+  memory:
+    mneme_store: "rt/plugin-global/mneme.json"
+    mneme_md: "rt/plugin-global/mneme.md"
+  context:
+    events_dir: "rt/plugin-global/events"
+    usd_per_1k: 0.002
+  at_file:
+    workspace_root: "projects/pm"
+  modsearch:
+    corpus_dir: "projects/pm"
+  rag:
+    store_path: "rt/plugin-global/kb.json"
+  find:
+    root: "sloth_engine/plugins"
+  roster:
+    # 18 translated plugins, trusted (12 DSH core + todo/credentials/
+    # schedule/jobs/document/fs). 4 scaffold templates stay discovered
+    # (NOT mounted: tool-name collision guard, documented).
+    - {id: dsh-mneme, enabled: true, trusted: true}
+    - {id: dsh-context, enabled: true, trusted: true}
+    - {id: dsh-agent-teams, enabled: true, trusted: true}
+    - {id: dsh-workflow, enabled: true, trusted: true}
+    - {id: dsh-find-plugin, enabled: true, trusted: true}
+    - {id: modsearch, enabled: true, trusted: true}
+    - {id: modlens, enabled: true, trusted: true}
+    - {id: dsh-browser, enabled: true, trusted: true}
+    - {id: dsh-genui, enabled: true, trusted: true}
+    - {id: dsh-at-file, enabled: true, trusted: true}
+    - {id: dsh-handbook, enabled: true, trusted: true}
+    - {id: dsh-rag-kb, enabled: true, trusted: true}
+    - {id: dsh-todo, enabled: true, trusted: true}
+    - {id: dsh-credentials, enabled: true, trusted: true}
+    - {id: dsh-schedule, enabled: true, trusted: true}
+    - {id: dsh-jobs, enabled: true, trusted: true}
+    - {id: dsh-document, enabled: true, trusted: true}
+    - {id: dsh-fs, enabled: true, trusted: true}
+

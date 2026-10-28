@@ -1,0 +1,12 @@
+sloth-loop (树懒 Loop)
+Copyright 2026 lvfushuai (gege-lv)
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+sloth-loop is an LLM-free task-orchestration engine.  It does not embed any
+language model, hold any credentials, or make any LLM calls; the “thinking”
+is outsourced to whatever agent (Codex / Claude …) mounts it.  See
+docs/design/loop-vs-agent-quota-and-boundary.md for the full boundary.
+
+Third-party dependencies are listed in pyproject.toml / requirements*.txt and
+remain under their own licenses.

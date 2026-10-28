@@ -1,0 +1,32 @@
+# Evolution 进化闭环配置示例
+# sloth-loop P0-3: 新增配置示例文件
+
+evolution:
+  enabled: true
+
+  # 自动排除策略
+  auto_exclusion:
+    enabled: true
+    min_consecutive_failures: 3   # 连续N次失败后自动升级
+    min_risk_level: "low"          # 低/中/高；low=自动，medium=建议，high=需人工
+    max_rules: 500                 # 规则膨胀上限
+    cooldown_rounds: 10            # 排除后冷却轮数
+
+  # 观察合并策略
+  observation_consolidation:
+    enabled: true
+    min_similar_failures: 5        # N条相似失败→1条规律
+    similarity_threshold: 0.7      # cosine相似度阈值
+    max_observations: 200          # 观察池上限
+
+  # 插件驱动策略
+  plugin_driver:
+    enabled: true
+    rag_update_interval: 50        # 每N轮更新RAG知识库
+    memory_consolidate_interval: 100
+
+  # 回测健康检查
+  health_check:
+    max_consecutive_errors: 10
+    backtest_timeout_seconds: 300
+    min_success_rate: 0.05

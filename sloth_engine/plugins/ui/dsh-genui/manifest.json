@@ -1,0 +1,1 @@
+{"id":"dsh-genui","version":"0.1.0","type":"ui","entry":"entry.py","extension_points":["tool"],"inject":["gen-ui"],"lazy":true,"description":"Python port of dsh-genui (concept): offline text dashboard / panel renderer"}

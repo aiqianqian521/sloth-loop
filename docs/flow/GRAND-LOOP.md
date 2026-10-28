@@ -1,0 +1,67 @@
+# GRAND-LOOP 唤醒指针
+
+> 触发口令：**"开始执行sloth-loop自进化和蒸馏大厂项目"**
+> 完整指导文件：`docs/flow/2026-09-05-grand-loop-task.md`（按 AGENT_EXECUTION_TEMPLATE v7 严格约束）
+
+⚠ **基线/路径时点声明（2026-10-17 追加）**：下方三件套为 **2026-09-05 初建快照**，其中的
+`<WORKSPACE_ROOT>\loop-dev` / `780passed` / `codex/w0-w2` / `772passed` 均为**当时值**。
+**当前为**：`<WORKSPACE_ROOT>\loop-dev-next`（分支 `dev`，代码 head `0b8afab`，
+1760 passed / 0 xfailed / coverage 79.49%，`fail_under=70`）。当前基线**单一来源**为 `docs/baseline.json`
+（其 `head` 字段 = 该基线对应的代码提交；当前态转述见 `docs/sloth-loop-ROADMAP.md §0`）。
+
+**cycle-5 → cycle-43 提交链（回环锚）**：`a6fd7ab`(四路并行检索) → `eb9f4b6`(DeferOperation 背压) →
+`b1cf524`(失败域分类+两级熔断) → `549fb8c`(stall 看门狗) → `3f8b5b6`(watchdog 接线) → `f698d49`(上下文域工具策略门) →
+`b20590f`(D-F9-1 归档唯一性) → `3da60e1`(基线 1343/73.50) → `766cfdb`(§13.32 F9 探针) →
+`2a1a180`(cycle-9 A：步骤级异常策略 + 双窗配额，2 条 adopted) → `561727b`(基线 1368/73.79 + §13.33) →
+`234254c`(cycle-9 B/C/D + §13.34) → `cd54ef3`(cycle-10 A/D：G-5 接线 + G-6 配额停机门 + R1 `--once` 持锁，+24 用例) →
+`3c6a8be`(architect-skills cycle-10 B：AGE-19 + AGE-18/COS-08 接线补强) →
+`81f0b46`(cycle-11 A/D：N-1 无调用方机制门禁 + 归档死代码 loop_pipeline + I-1 转义告警修复) →
+`afcf94e`(architect-skills cycle-11 B：AGE-20 无调用方机制门禁) → `26633e3`(cycle-12 A：WeKnora 重叠感知保守文本拼接，条目 10) →
+`c960a3d`(architect-skills cycle-12 B：RAG-09) → `c7dad2c`(cycle-13 A：文件型额度探针，N-3 feasible slice) →
+`90a5287`(architect-skills cycle-13 B：COS-08 来源可离线注入补强) → `a67594e`(cycle-14 A：状态历史导出可达化 + 真 JSON) →
+`9ef5c40`(architect-skills cycle-14 B：OBS-11 审计导出端到端断言) → `f9049a7`(cycle-15 A：tool_pipeline 14 步契约测试，+25 用例) →
+`b2dd73e`(architect-skills cycle-15 B：OBS-12 多步管线审计须覆盖全部短路分支) → `a09421a`(cycle-16 A：权限门调用点修复 + 6 个伪测试纳入门禁，+57 用例) →
+`006eea4`(architect-skills cycle-16 B：TES-11 伪测试纳入门禁 + AGE-21 接缝多调用点) → `710a3af`(cycle-17 A：门禁自证——实测 vs 登记单向棘轮 + 门禁行为契约 + 收集扫描加固，+46 用例) → `88fa263`(architect-skills cycle-17 B：TES-12/TES-13 + AGE-22) → `c758387`(cycle-18 A：唤醒指针提交链自证——解析 GRAND-LOOP 提交链并与 git 实测对照，+8 用例) → `ee725bf`(architect-skills cycle-18 B：TES-14 + DOC-06) → `42928fa`(cycle-19 A：全仓扫描假哈希声明 + 缺陷引用改用「❌错记」形态，+2 用例) → `d3f2ea6`(architect-skills cycle-19 B：TES-15) → `970e3a1`(architect-skills cycle-19 B2：TES-15 补扫待提交) → `bee4bc8`(cycle-19 A2：守卫补扫"待提交"文件 + 缺陷引用形态再修，守卫在提交后的树上重跑自证) → `d2affd3`(cycle-20 A：正文散文/箭头链哈希守卫 + 3 处幽灵哈希修正，+5 用例) → `748cecd`(cycle-20 A3：守卫精度——纯数字 token 排除 + 边界自证，+1 用例) → `edbcce0`(architect-skills cycle-20 B：TES-16 + DOC-07) → `de64aca`(cycle-21 A：正文/指针裸哈希守卫 + 同行 git 上下文门控 + 外部源仓 pin 登记，+4 用例) → `a3681a4`(architect-skills cycle-21 B：TES-17 + DOC-08) → `fb993dc`(cycle-22 A：跨仓账本扫描——全长度哈希解析 + 带分隔符摘要标签 + 分类器 +7 用例) → `f34dad6`(architect-skills cycle-22 B：TES-18 + DOC-09) → `feac425`(cycle-23 A：交付的验证器本身必须被验证——exit code 与手写登记表直接断言，+3 用例) → `14112db`(architect-skills cycle-23 B：TES-19 + DOC-10) → `f127664`(cycle-24 A：校验器的作用域本身必须被校验——入口文档纳入一致性校验，+3 用例) → `eafd45c`(architect-skills cycle-24 B：TES-20 + DOC-11) → `460ff36`(cycle-25 A：导航标号必须被机器校验——指针=注册表最新、注册表连续无重复，+4 用例) → `6fe1031`(architect-skills cycle-25 B：TES-21 + DOC-12) → `b222d45`(cycle-26 A：一致性校验必须区分『当前态』与『历史态』——历史数字必须带块级锚点，+7 用例) → `29e7fc1`(architect-skills cycle-26 B：TES-22 + DOC-13) → `a281839`(cycle-27 A：识别器的字母表不得窄于它审计的现实——哈希口径统一 7..40 + 全/半角括号 + 跨仓解析，+10 用例) → `1222959`(architect-skills cycle-27 B：TES-23 + DOC-14) → `a58bf55`(cycle-28 A：护栏门禁的三重盲区 + 首次建库竞态——路径段关键字误判 / 策略拒绝误渲染成路径逃逸 / `arg_rules` BLOCK 层形同虚设 / 并发首建库假报『需要迁移』，+26 用例) → `c725c84`(cycle-29 A：护栏规则可达性 + 出口语义 + 运行产物收纳——`arg_rules` 惰性字面量删除并由扫描器兜底 / 空格路径边界登记 / escalate fail-closed 标注 / `--once` 退出码口径 / run_ts 树与锁路径随 `runtime.root`，+14 用例) → `481feb2`(architect-skills cycle-29 B：TES-24 + DOC-15) → `852fb84`(cycle-30 A：证据引用必须真实可解析——dated REPORT.md 引用了它从不写出的 data/，+10 用例) → `2205ce0`(architect-skills cycle-30 B：TES-25 + DOC-16) → `f4dd5e7`(cycle-31 A：识别器的每个语法定点收敛为单一常量——括号类 / 前缀，+5 用例) → `f6dfebb`(architect-skills cycle-31 B：TES-26 + DOC-17) → `9ba0b5f`(cycle-32 A：缺陷豁免必须窄于它所豁免的缺陷——标记只豁免它标注的 token，+8 用例) → `a0877f2`(architect-skills cycle-32 B：TES-27 + DOC-18) → `7eabdb3`(cycle-33 A：门控的触发条件不得窄于它识别的声明——紧邻性而非共现性，+3 用例) → `b586796`(architect-skills cycle-33 B：TES-28 + DOC-19) → `706df02`(cycle-34 A：开关的作用域不得大于它豁免的对象——摘要标签只豁免它标注的那个值，+4 用例) → `6665a2a`(architect-skills cycle-34 B：TES-29 + DOC-20) → `eb788b1`(cycle-35 A：「受门控」必须是登记的事实、不是名字——不变量 1 的豁免按文件登记，+5 例) → `85b312b`(architect-skills cycle-35 B：TES-30 + DOC-21) → `8c6edb2`(cycle-36 A：无门即无 spawn——回测适配器 / OODA 回调与回归 sink 失败关闭，+5 例) → `e1c5718`(architect-skills cycle-36 B：TES-31 + DOC-22) → `310c918`(cycle-37 A：fail-closed CI——服务端 pre-receive 推送门禁 + 密钥/家目录扫描，+28 例) → `aca352b`(architect-skills cycle-37 B：TES-32 + DOC-23) → `529ec97`(cycle-38 A：业务提交哨兵——迁移恢复 RPO 升级为业务时间点，v6 触发器水印，+6 例) → `fbe1f91`(architect-skills cycle-38 B：TES-33 + DOC-24) → `9f2d5f3`(cycle-39 A：测试隔离 + 门禁口径，收集期不再触碰仓库运行态，+3 例) → `f50b574`(architect-skills cycle-39 B：TES-34 + DOC-25) → `142fb5d`(cycle-39 A2：补齐测试隔离其余 5 个仓库写入点) → `74253b4`(cycle-40 A：测试观测面不得随机器残留状态漂移，插件草稿目录 + 仓库根 _data 隔离) → `7471e41`(cycle-40 A2：测试结论必须可复现，并发时序不得决定分支覆盖) → `741eb96`(architect-skills cycle-40 B：TES-35 + DOC-26) → `fc492f0`(cycle-41 A：交接入口文档必须被口径守护覆盖——START.md 纳入 CHECK_FILES) → `b875f4e`(cycle-42 A：当前态文档口径守护扩容 + 陈旧基线/乱码修复) → `0b8afab`(cycle-43 A：发布物去本机化 + 项目沿革 HISTORY.md) → 本文件提交（基线 1760/79.49 + §13.68）。
+
+**下一目标（自动，按 §13.68 排序）**：
+- **N-3（真实厂商额度源）/ R3（真实模型调用 · 24h soak）：用户裁定「不做」**（2026-10-23）→ 仅作文档登记，
+  **不再作为 blocked 项跟踪**；宿主若将来愿意把真实用量写成 JSON，`LOOP_QUOTA_FILE` 文件探针零改动即可接入。
+- **coze I-1/I-3/I-4、cycle-12 条目 11/12/13：维持 candidate-pending（无解封条件不启动）**；
+  解封条件分别见 §13.41 与 `_INDEX.md` 各条目 ⑦。I-2 若将来落地多工具 Act，须接线 `tool_concurrency` 并删除其 EXEMPT。
+- **当前无待办积压**：cycle-15/16 已闭合全部低优先项（`tool_pipeline` 14 步契约；`tool_registry.dispatch` 65%→**100%**、
+  `tool_concurrency` 0%→**100%**）。后续默认动作：继续 A→B→C→D 回环，优先「真实缺陷 / 门禁盲区」类目标（cycle-17 即按此闭合门禁自证盲区）。
+
+- **cycle-18（本轮已闭合）**：唤醒指针提交链自证 —— `docs/flow/GRAND-LOOP.md` 的提交链首次被**机器校验**：每条 `cycle-N`
+  记录须在 git 中存在、且提交主题不得指向其它 cycle；同一哈希不得标注两个 cycle；链标题跨度须等于最新条目；
+  `head` 指针须等于 `docs/baseline.json.head`（+8 用例，负例自证）。同时修回 cycle-16 A 的错哈希
+  （`710a3af` → `a09421a`，此前被重复的 `710a3af` 掩盖）。实测 1588 → **1596 passed**（coverage 78.73% 持平）。
+
+- **cycle-19（本轮已闭合）**：假哈希声明**全仓扫描** —— cycle-18 修好了提交链本身，但 cycle-18 的**缺陷描述**
+  又把错哈希照抄成声明形态（设计文档 2 处 + status §13.43），全仓扫描首跑即在 3 处复现同一假声明。
+  修复：新增 `test_no_tracked_document_claims_a_hash_for_the_wrong_cycle`（遍历 `git ls-files` 的 .md/.json/.py +
+  覆盖度阈值 + 负例自证），并把缺陷引用改写为 `710a3af`(「❌错记 cycle-16 A」) 形态（附图例），使"提到错值"
+  与"声明记录"在机器上可区分。实测 1596 → **1598 passed**（coverage 78.73% 持平）。
+  **A2 修正（commit `bee4bc8`）**：上一版扫描用 `git ls-files`（仅 tracked），新建文档在"写的过程中"还是 untracked，
+  扫不到 —— 下一个提交把它变成 tracked 后，**自己的守卫立刻在刚提交的树上报警**。已改为
+  `git ls-files --cached --others --exclude-standard`（tracked + 待提交）+ 本机 `work_ooda/**/*.md`；
+  证明：向仓库根放一个含假声明的 untracked 文件 → 守卫立刻失败（修复前完全不可见），删除后恢复 0 违规。
+  方法论：**"修好了"必须用"在提交后的树上重跑一次守卫"来证明**（B2 已写入 architect-skills TES-15）。
+- **cycle-20（本轮已闭合）**：正文散文 / `A→B→C` 箭头链的哈希引用守卫 —— 用户直问「任何照链取证的 agent（回溯代码、写交接、做归因）都会拿到错哈希，而错哈希会被当成事实一路传递」，答案是**没修全**：cycle-18/19 只守住 `` `hash`(cycle-N) `` 声明形态与唤醒指针区块，**正文散文里的裸哈希与箭头链从未被任何守卫看过**。三仓交叉取证（sloth-loop / legacy sloth-loop / architect-skills）命中 **3 个幽灵哈希**：GRAND-LOOP L53 的 ❌错记 `11588a1`（真值 `11542a1`）、cycle-14 设计文档 L4 的 ❌错记 `a67594c`（真值 `a67594e`）、status §13.9 的 ❌错记 `8cf9d4c`（真值 `eb9f4b6`）。修复：`test_no_shipped_document_names_a_nonexistent_hash`（shipped `.md` 的每个反引号哈希 + 箭头链哈希须解析到已知仓，fail-closed）+ `test_shipped_arrow_chains_are_ancestor_ordered`（箭头链里同仓相邻哈希须祖先相关）。实测 1598 → **1604 passed**（coverage 78.73% 持平）。**A2 自查**：守卫自证探针发现 `ARROW_RUN_RE` 只认裸哈希 → **带反引号的箭头链整段漏检**（修：匹配前展平反引号，tokenizer + 拓扑两处）。
+- **cycle-21（本轮已闭合）**：正文/指针里**裸写**（不带反引号）的提交哈希守卫
+  —— cycle-20 之后用户再追问「任何照链取证的 agent（回溯代码、写交接、做归因）都会拿到错哈希」，复查发现 cycle-20 只扫**反引号哈希与箭头链**，**裸哈希从未被任何守卫看过**。全仓实测：唤醒指针路径行与 registry 提交列共 **79 个唯一裸 token（179 处）** 无人校验（实测 0 真错）。
+  修复：`_bare_git_context_tokens`（裸哈希**仅当同行已含可解析提交引用**时才计入——排除「字母全落在 a–f 的普通英文单词」这类噪声；摘要标签行跳过；纯数字 token 仍排除）+ 登记**外部源仓 pin**（`SOURCE.md` 的 `TencentDB-Agent-Memory@2ee2239`，否则裸扫会把真 pin 误判为幽灵）。 实测 1604 → **1608 passed**（coverage 78.73% 持平）。
+- **cycle-22（跨仓账本扫描：分类器与边界）**：把 cycle-18~21 的账本守卫指向**兄弟语料**（legacy `sloth-loop` 2300 篇 / architect-skills 86 篇），实测 **32 处 finding、0 处幽灵提交**——规则没错、语料不同。修复：① **全长度哈希解析**（缩写表只有 `%h`，8~40 字符的哈希在任何仓都解析不出 → 误报）；② `matrix_md5=<32hex>` 这类**带分隔符的摘要标签**不再被读成提交声明；③ 新增 **fail-closed 分类器**（数据指纹 / 运行时对象 id / amend 中转与外部仓基线 / 守卫自身示例，默认仍是 `phantom`）+ `scripts/audit_cross_repo_ledger.py` 复现整轮扫描（**只做取证，不进 pytest 门禁**）；④ **第 7 例同族缺陷**：architect-test/guide.md 逐字复刻守卫示例 token（defaced / effaced / abc123d），已改。实况 1608 → **1615 passed**、coverage 78.73% 持平。
+- **cycle-23（交付的验证器本身必须被验证）**：cycle-22 新增的 `scripts/audit_cross_repo_ledger.py` 是分类器 `classify_document` 的**唯一调用方**，却 **0 覆盖**、exit code 从未被任何门禁跑过——「交付了验证器」≠「验证器被验证」。修复：① **exit code 是断言**——合成语料有未解释幽灵 → `exit 1`、全部可解释 → `exit 0`，两条路径都被测试直接驱动；② **登记表不可静默腐烂**——`REGISTERED_UNRESOLVABLE` 每条必须断言此刻仍解析不出任何已知仓，一旦可解析即 FAIL；③ 单测清空 `DEFAULT_TARGETS`、只扫合成仓，不依赖本机兄弟 checkout。B 轮把口径落进 architect-skills **TES-19 + DOC-10**（19 / 10 条）。实况 1615 → **1618 passed**、coverage 78.73% 持平。
+- **cycle-24（校验器的作用域本身必须被校验）**：cycle-17 的 `scripts/docs_baseline.py` 用一份**手写清单** `CHECK_FILES` 防止当前态文档漂移，却漏掉了 `docs/flow/GRAND-LOOP.md`——新 agent 第一个读的 wake pointer；它引用的基线数字**无人校验**（wake-pointer 守卫只交叉核对 `head`）。证据：把它改成 `9999 passed / coverage 55.55%` → `docs_baseline` 仍 OK、守卫仍 30 passed。修复：① `CHECK_FILES` 纳入 wake pointer；② 自证测试固定「入口文档在清单内」，且改坏入口文档必须 FAIL；③ 真实仓断言 `docs_baseline.check(REPO) == []`。B 轮口径落进 architect-skills **TES-20 + DOC-11**（20 / 11 条）。实况 1618 → **1621 passed**、coverage 78.73% 持平。
+- **cycle-25（导航标号必须被机器校验）**：`docs/flow/GRAND-LOOP.md` 的『下一目标（自动，按 §13.N 排序）』是一个**手写指针**，每轮 C/D 手动 +1；状态注册表的最新小节由人工追加——两者之间**没有任何校验**。证据：把指针从 §13.50 改成过期 §13.49 → `tests/test_wake_pointer_chain.py` 仍 30 passed、`docs_baseline` 仍 OK。修复：① 指针必须等于注册表里最新 `### 13.N` 小节；② 注册表必须连续、无重复（append-only）；③ 指针缺失 / 注册表为空即 fail-closed；④ 自证（过期指针 / 重号 / 缺号 / 指针缺失）。B 轮口径落进 architect-skills **TES-21 + DOC-12**（21 / 12 条）。实况 1621 → **1625 passed**、coverage 78.73% 持平。
+- **cycle-26（一致性校验必须区分『当前态』与『历史态』）**：`scripts/docs_baseline.py` 此前只断言「基线数字在文档里**出现过**」，从不断言「其余数字被标注过」——cycle-24 把这条登记为**已知边界**（设计说明 §6）。后果：`docs/sloth-loop-AS-BUILT.md` 第 169 行的 `758 passed` 与 `docs/sloth-loop-ROADMAP.md` §4 的 `734/745/755/758` **与现值并排却无锚点**，校验器仍 `OK`——旧数字会被读者 / agent 读成今天的。修复：① 新增**块级锚点**规则（`blocks()` + `unanchored_suite_counts()`）——文档里每个 3 位以上 `N passed` 要么等于基线，要么其**所在块**（非空行分隔；列表项 / 标题 / 引用起新块）内有日期 `20xx` / `cycle-N` / 「历史」；② 7 处历史数字补「历史快照」锚点；③ 自证：无锚点 stale 必须 FAIL、带锚点必须 OK、基线 / 步进计数（`1/1 passed`）豁免、逐文件真实仓 fail-closed 扫描。B 轮口径落进 architect-skills **TES-22 + DOC-13**（22 / 13 条）。实况 1625 → **1632 passed**、coverage 78.73% 持平。
+- **cycle-27（识别器的字母表不得窄于它审计的现实）**：cycle-26 登记的候选是「哈希旁的轮次标注无人校验」，往下挖却挖到**引擎**：`ENTRY_RE` / `HEAD_RE` / `CLAIM_RE` 三个解析器各自硬编码 `[0-9a-f]{7}`，而幽灵规则早已采用 `[0-9a-f]{7,40}`——**比现实窄的识别器会静默丢弃记录**（把链条目里一条哈希改成同提交的 8 位写法 → 旧口径 `chain_entries` 49→48，而下限断言 `MIN_ENTRIES=20` 仍然通过，守卫报「无问题」而非报红）。另两处实证：`docs/flow/2026-09-05-grand-loop-task.md` 里 `64de89b`（cycle-1 A→B→C→D 闭合…）用**全角括号**写作 → 旧口径 0 命中（全仓 49 vs 50）；且该提交只在 legacy 仓 `sloth-loop` 中，而 `claim_problems` 只看本仓——即便被识别也会被报成幽灵。修复：① 单一口径常量 `HASH_SRC = [0-9a-f]{7,40}` 由三个识别器共用；② `CLAIM_RE` 接受全 / 半角括号 + 括号前空白；③ `claim_problems` 按「已知来源仓」逐个解析后再判幽灵；④ head 指针按提交前缀比较（git 缩写是唯一前缀）；⑤ 旧口径保留为 `NARROW_*` 缺陷见证。B 轮口径落进 architect-skills **TES-23 + DOC-14**（23 / 14 条）。实况 1632 → **1642 passed**、coverage 78.73% 持平。
+- **（候选，未机器化）守卫的语法定点仍窄于现实**：本轮把**哈希字母表**统一为 7..40 并把全角括号纳入 `CLAIM_RE`，但同族的定点仍硬编码——① `ENTRY_RE` 仍要求链条目用 **ASCII 括号**（全角括号的链条目会被**静默跳过**）；② `HEAD_RE` 仍要求固定前缀「代码 head 」；③ 引用旁的轮次标注只在「反引号哈希 + 括号 + cycle-N」形态下被校验，逗号 / 破折号等分隔形态仍不可见；④ 跨仓解析放宽后，本仓打错的哈希若恰好命中别仓某提交即不再报幽灵（legacy 仓 2300+ 提交）。若要机器化，需把「括号类 / 前缀」也收敛成单一常量，并给全角链条目补负例。
+
+## 唤醒三件套（路径/模式/上下文条件）
+- 路径：sloth-loop=`<WORKSPACE_ROOT>\loop-dev`(HEAD 1fb4846 代码止(M1-1)/780passed,cov72.27;cycle-2 闭合(H1 godfile×3<800+M1-1 telemetry+记录补齐至 362e479/af5cd11) + A蒸馏 iter#4-7 docs-only(adk+coze-loop+eino+librechat 候选 23→33, HEAD 50b8e1e) + B-round2 architect-skills⑩⑧校正(25e3fe6) + C-round2 增量复评(3d203cb) + A iter#8 autogen 3candidate(2e7a90f) + A iter#9 deer-flow 3candidate(⑥⑦⑩,7fe2964) + C-round3 增量复评(0c0a341) + A iter#10 agentscope 3candidate(③/⑥/⑦sandbox,e0d4618) + A iter#11 codex 3candidate(⑥/⑦/⑧,0cf4917) + A iter#12 codex 续⑩ 1candidate(⑩,56e9882) + A iter#13 codex 续④ 1candidate(④,f79f96a)) / architect-skills=`<SKILL_ROOT>\architect-skills-offline-bundle\architect-skills` / 大厂源=`<WORKSPACE_ROOT>\other_project` / 模板=`<KB_ROOT>\500-AI Agent\组合工作流\AGENT_EXECUTION_TEMPLATE.md`
+- 模式：大循环 A蒸馏+loop代码自进化 → B修正architect-skills → C评估+修正sloth-loop/蜂群 → D梳理大任务+回环；蒸馏v2.1(D1-D13) + AGENT_EXECUTION v7(四步+G-1~G-9)
+- 上下文条件：口令触发 + 772passed基线 + open audit iter#3全closed(D6 9/9/D7/Russell/D12) + commit链 766209c→24be2bb→56b1b6e→039e67d→74d7ad9→93f86a4→8ba5117→321030f→64de89b(cycle-1) ; cycle-2+补齐链：bb951ef→1fb4846(M1-1)→11542a1→edf2a55→b1dada5→a276c7f→362e479→af5cd11(补齐)→ff0ab6a/a58415d(a#4 adk)→af90910(a#5 coze-loop)→9cd3484(a#6 eino)→50b8e1e(a#7 librechat 候选33)→25e3fe6(B-round2)→dea7375(anchor-fix)→3d203cb(C-round2)→2c93a40(C-anchor)→2e7a90f(A-iter#8-autogen)→fcf9d5e(A8-anchor)→7fe2964(A-iter#9-deer-flow)→5618ef5(A9-anchor)→0c0a341(C-round3)→f764631(C-round3-anchor)→e0d4618(A-iter#10-agentscope)→8ac39b1(A10-anchor)→0cf4917(A-iter#11-codex)→64c0c60(A11-anchor)→56e9882(A-iter#12-codex-otel)→1d08efd(A12-anchor)→f79f96a(A-iter#13-codex-mcp)
+
+## 唤醒动作
+读完整指导文件 → 读 distillation-flow-diagram §⑧/⑨ + docs/knowledge-distillation/_INDEX.md + 2026-09-05-grand-loop-status.md(动态registry) → 复述大循环 → 与用户确认范围 → A1 扫描/继续蒸馏

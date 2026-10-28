@@ -1,0 +1,1 @@
+{"id":"dsh-browser","version":"0.1.0","type":"rag","entry":"entry.py","extension_points":["tool"],"inject":["browser"],"lazy":true,"description":"Python port of dsh-browser (concept): pluggable headless browser read/click with backend-not-configured offline contract"}

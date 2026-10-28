@@ -1,0 +1,1 @@
+{"id": "dsh-jobs", "version": "0.1.0", "type": "ops", "entry": "entry.py", "extension_points": ["tool"], "inject": ["jobs"], "lazy": true, "description": "Python port of dsh-jobs: bounded-output-ring job registry (running/stopping/terminal) with non-consuming offset reads and archive admission", "skill_policy": "auto"}

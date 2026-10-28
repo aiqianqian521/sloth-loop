@@ -1,0 +1,12 @@
+# Loop 自进化编排引擎 - sloth_engine 依赖
+# MVP 仅标准库 + PyYAML（与现有 config 兼容）
+PyYAML>=6.0
+# ⏳ 扩展点(按需启用):
+#   openai / anthropic   # 信号生成接入 LLM
+#   numpy / pandas       # 回测结果分析
+
+# P2-A WebUI Dashboard (backend JSON API + static front)
+fastapi>=0.110
+uvicorn>=0.27
+# test only: starlette TestClient backend
+# httpx>=0.28

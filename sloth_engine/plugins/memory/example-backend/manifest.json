@@ -1,0 +1,1 @@
+{"id":"example-backend","version":"0.1.0","type":"memory","entry":"entry.py","extension_points":["memory_store"],"inject":["demo"],"lazy":true,"description":"example memory backend stub (illustrative)"}

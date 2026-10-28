@@ -1,0 +1,1 @@
+{"id":"rag-vector","version":"0.1.0","type":"memory","entry":"entry.py","extension_points":["memory_store","pattern_store_factory"],"inject":["vector"],"lazy":true,"description":"RAG-style memory backend (vector-retrieval layer), third-party-shaped demo"}

@@ -1,0 +1,48 @@
+# sloth_engine P3.2 green umbrella: single source of truth for pytest + coverage.
+# Do NOT add pytest.ini or .coveragerc - both live here to avoid dual-source drift.
+# addopts uses bare --cov (no =path) so pytest-cov reads [tool.coverage.run].source,
+# keeping every coverage knob in exactly one place.
+
+[project]
+name = "sloth-loop"
+version = "4.0-dev"
+description = "sloth-loop (树懒 Loop): an LLM-free, self-evolving OODA task-orchestration engine. Signal-driven loops with automatic failure/success pattern learning and a DSH-compatible plugin architecture. The engine orchestrates; a mounted agent thinks."
+requires-python = ">=3.11"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+keywords = ["orchestration", "ooda", "self-evolving", "agent", "automation", "llm-free"]
+classifiers = [
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "fastapi>=0.100",
+    "uvicorn>=0.20",
+    "pyyaml>=6.0",
+    "pydantic>=2.0",
+    "httpx>=0.27",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=9.0",
+    "pytest-cov>=7.0",
+    "coverage>=7.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/gege-lv/sloth-loop"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--strict-markers --cov --cov-report=term-missing"
+
+[tool.coverage.run]
+source = ["sloth_engine"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 70
+# baseline=64% @ HEAD c637b0d ; ratchet-only via scripts/run_gate.py (never lower in-commit)
+# ratcheted 64->70 @ 2026-09-05 (C阶段评估驱动: actual cov 72.27%, margin 2.27; ⑧门禁 slack 收紧)

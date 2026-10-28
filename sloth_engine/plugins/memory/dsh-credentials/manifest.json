@@ -1,0 +1,1 @@
+{"id": "dsh-credentials", "version": "0.1.0", "type": "memory", "entry": "entry.py", "extension_points": ["tool"], "inject": ["credentials"], "lazy": true, "description": "Python port of dsh-credentials: credential reference seam (grammar + layered resolution env>managed>project>.env), value never surfaced", "skill_policy": "auto"}

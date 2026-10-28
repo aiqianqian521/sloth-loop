@@ -1,0 +1,5 @@
+# sloth_engine P3.2 green-umbrella dev/test deps (pinned for a reproducible gate).
+# Install: python -m pip install -r requirements-dev.txt
+pytest==9.1.1
+pytest-cov==7.1.0
+coverage==7.16.0

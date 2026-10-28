@@ -1,0 +1,1 @@
+{"id":"dsh-rag-kb","version":"0.1.0","type":"rag","entry":"entry.py","extension_points":["tool"],"inject":["kb"],"lazy":true,"description":"Python port of @deepseek-ai/dsh-rag-kb: local RAG knowledge base with kb_search/kb_index/kb_status tools"}

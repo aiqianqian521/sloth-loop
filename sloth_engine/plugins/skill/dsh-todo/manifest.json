@@ -1,0 +1,1 @@
+{"id": "dsh-todo", "version": "0.1.0", "type": "skill", "entry": "entry.py", "extension_points": ["tool"], "inject": ["todos"], "lazy": true, "description": "Python port of dsh-tool-todo: model-facing whole-list todo_write (last-write-wins snapshot); single or parallel in_progress policy", "skill_policy": "auto"}

@@ -1,0 +1,1 @@
+{"id":"dsh-agent-teams","version":"0.1.0","type":"skill","entry":"entry.py","extension_points":["tool"],"inject":["multi-agent-team"],"lazy":true,"description":"Python port of dsh-agent-teams (concept): NL multi-agent team plan decomposition"}

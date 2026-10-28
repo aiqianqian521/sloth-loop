@@ -1,0 +1,56 @@
+[
+  {
+    "signal_pattern": "中枢内+笔向下+中枢中段",
+    "market_condition": "中枢内",
+    "scene_stats": {
+      "count": 61,
+      "win_rate": "39.3%",
+      "total_pnl": "-5.02%"
+    }
+  },
+  {
+    "signal_pattern": "中枢内+笔向上+中枢中段",
+    "market_condition": "中枢内",
+    "scene_stats": {
+      "count": 54,
+      "win_rate": "44.4%",
+      "total_pnl": "+1.57%"
+    }
+  },
+  {
+    "signal_pattern": "中枢内+笔向下+近下轨",
+    "market_condition": "中枢内",
+    "scene_stats": {
+      "count": 9,
+      "win_rate": "66.7%",
+      "total_pnl": "+2.72%"
+    }
+  },
+  {
+    "signal_pattern": "中枢内+笔向上+近下轨",
+    "market_condition": "中枢内",
+    "scene_stats": {
+      "count": 7,
+      "win_rate": "28.6%",
+      "total_pnl": "-1.21%"
+    }
+  },
+  {
+    "signal_pattern": "中枢内+笔向下+近上轨",
+    "market_condition": "中枢内",
+    "scene_stats": {
+      "count": 11,
+      "win_rate": "54.5%",
+      "total_pnl": "-0.98%"
+    }
+  },
+  {
+    "signal_pattern": "中枢内+笔向上+近上轨",
+    "market_condition": "中枢内",
+    "scene_stats": {
+      "count": 19,
+      "win_rate": "47.4%",
+      "total_pnl": "-1.18%"
+    }
+  }
+]

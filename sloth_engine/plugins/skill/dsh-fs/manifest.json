@@ -1,0 +1,1 @@
+{"id": "dsh-fs", "version": "0.1.0", "type": "skill", "entry": "entry.py", "extension_points": ["tool"], "inject": ["fs"], "lazy": true, "description": "Python port of dsh-tool-fs: fenced read/write/edit/stat with line-numbered reads, atomic writes, unique-literal edits, capped results and stable error codes", "skill_policy": "auto"}

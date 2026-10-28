@@ -1,0 +1,6 @@
+[
+  {"signal_pattern": "ooda-file-1", "market_condition": "dev"},
+  {"signal_pattern": "ooda-file-2", "market_condition": "dev"},
+  {"signal_pattern": "ooda-file-3", "market_condition": "dev"},
+  {"signal_pattern": "ooda-file-4", "market_condition": "dev"}
+]

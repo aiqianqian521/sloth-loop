@@ -1,0 +1,14 @@
+[
+  { "signal_pattern": "极端位置追单",         "market_condition": "H240趋势+H1震荡" },
+  { "signal_pattern": "斐波那契过滤趋势确认",  "market_condition": "低波动趋势" },
+  { "signal_pattern": "区间上沿假突破做多",    "market_condition": "H4震荡" },
+  { "signal_pattern": "均值回归超卖反弹",      "market_condition": "高波动震荡" },
+  { "signal_pattern": "关键位突破确认追多",    "market_condition": "H240上升趋势" },
+  { "signal_pattern": "绝对位置盲区入场",      "market_condition": "区间顶部" },
+  { "signal_pattern": "多周期共振顺势",        "market_condition": "H240+H1同向" },
+  { "signal_pattern": "成交量背离反转",        "market_condition": "趋势末端" },
+  { "signal_pattern": "窄幅整理突破",          "market_condition": "低波动收敛" },
+  { "signal_pattern": "回踩不破继续持有",      "market_condition": "H1上升趋势" },
+  { "signal_pattern": "急跌抄底",              "market_condition": "恐慌下跌" },
+  { "signal_pattern": "趋势跟踪金叉入场",      "market_condition": "H240趋势" }
+]

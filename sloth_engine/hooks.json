@@ -1,0 +1,38 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python sloth_engine/hooks_check.py enforce_after_backtest",
+            "description": "回测后强制写入模式库：检测回测命令执行后，提醒Agent调用 record_result 流程"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python sloth_engine/hooks_check.py enforce_before_backtest",
+            "description": "回测前强制读取失败模式库：检测回测命令启动前，提醒Agent先 check_exclusion"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python sloth_engine/hooks_check.py guard_pattern_edit",
+            "description": "保护模式库：Agent 直接改失败/成功模式库 .md 时拦截，要求走 record_result/MCP"
+          }
+        ]
+      }
+    ]
+  }
+}

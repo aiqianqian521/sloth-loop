@@ -1,0 +1,1 @@
+{"id": "dsh-document", "version": "0.1.0", "type": "skill", "entry": "entry.py", "extension_points": ["tool"], "inject": ["document"], "lazy": true, "description": "Python port of dsh-document(office-to-pdf): conversion queue seam with identity/output/error taxonomy (offline provider stub)", "skill_policy": "auto"}

@@ -1,0 +1,1 @@
+{"id": "dsh-schedule", "version": "0.1.0", "type": "skill", "entry": "entry.py", "extension_points": ["tool"], "inject": ["schedule"], "lazy": true, "description": "Python port of dsh-schedule: durable reminders (after/at/every/cron) with strict time validation, min interval, bounded cron horizon", "skill_policy": "auto"}

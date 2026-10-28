@@ -1,0 +1,128 @@
+# Loop Self-Evolving Orchestrator — Config
+# Phase 1: contract-aligned with BUDGET hard/soft + STOP completion/safety
+
+memory:
+  sqlite_path: "data/patterns.db"
+
+loop:
+  signals: "data/signals_seed.json"
+  batch_size: 3
+  max_rounds: 200
+  max_seconds: 1800
+  no_progress_stop: 999
+  meta_analyze_every: 5
+  # L3 cycle-4 A4 (adopted C2): a deferred/backpressure round is a
+  # NON-failure (hindsight DeferOperation): it does not consume the
+  # consecutive-error budget and cannot open the circuit breaker.
+  backpressure_defer_enabled: true
+  # L3 cycle-5 A4 (adopted C1): bounded multiplicative rerank (Hindsight
+  # combined_score). alphas 0.0 = identity (no order change).
+  rerank_recency_alpha: 0.0
+  rerank_proof_alpha: 0.0
+  rerank_halflife_days: 30.0
+  rerank_recency_mode: exponential
+
+# ── Contract: BUDGET (hard vs soft) ─────────────────────────
+# hard = Agent can self-enforce (count rounds, detect failures, check clock)
+# soft = intent declaration, Agent cannot precisely measure (token count)
+budget:
+  hard:
+    max_rounds: 200
+    max_runtime_minutes: 30
+    max_consecutive_failures: 2
+  soft:
+    max_tokens_per_round: 50000
+    max_sub_agents: 3
+
+# ── Contract: STOP (completion vs safety) ───────────────────
+stop:
+  completion:
+    - all_criteria_met
+    - max_rounds_reached
+  safety:
+    - budget_exhausted
+    - consecutive_failures
+    - denylist_hit
+
+backtest:
+  script: "backtest/mock_backtest.py"
+  timeout_sec: 3600
+  python: ""
+  cwd: ""
+  extra_args: "--max-bars 26000"
+
+ooda:
+  enabled: true
+  uq_enabled: true            # v2.0: U&Q 交互确认（首次运行/关键决策）
+  uq_require_input: false        # U&Q: 未传(goal/boundary/success_criteria)且此项=true 则强提醒并请求; 已传(或 agent 执行)则直达
+  schema_validate: false            # 输入信号强校验(开启后非法信号被拒/SIG_INVALID_SIGNALS)
+  schema_require_all: false        # true=非法即整批失败(fail-closed); false=仅剔除非检
+  delta_enabled: true         # v2.0 P0-2: Delta 对比
+  annotation_enabled: true    # v2.0 P0-3: 推理标注 [数据]/[推理]/[结论]
+
+# Task definition (can be overridden by --task file)
+task:
+  name: "demo-backtest"
+  success_criteria:
+    - metric: "trades_count"
+      operator: "gt"
+      threshold: 0
+  constraints:
+    max_rounds: 200
+    no_progress_stop: 999
+  # scope: what the task CAN and CANNOT touch
+  scope:
+    allow: ["data/", "signals/", "backtest/", "sloth_engine/", "_data/"]
+    deny:  ["secrets/", "keys/", "production/", ".env"]
+
+zones:
+  green:
+    - batch_size
+    - timeout_sec
+    - meta_analyze_every
+    - max_rounds
+    - error_stop
+  yellow:
+    - exclusion_rule
+    - success_criteria
+    - position_scale
+    - indicator_weights
+    - filter_thresholds
+  red:
+    - hard_constraints
+    - core_safety_rules
+    - ooda_step_sequence
+    - circuit_breaker
+
+consumer:
+  min_queue_size: 3
+  min_same_type: 3
+  high_confidence: 5
+  max_suggestions: 5
+
+# ── L2 Evolution Loop ────────────────────────────────────────
+l2:
+  enabled: true
+  progress_window: 5         # 进度感知窗口（最近 N 轮）
+  periodic_every: 5          # 周期性触发间隔
+  queue_trigger: 3           # 队列累积触发阈值
+  anomaly_trigger: true      # 异常信号触发（连续失败/全部排除）
+  stagnation_trigger: 2      # 停滞检测：连续无进展轮数触发
+
+# ── PM 脚本接入 (v2.1) ──────────────────────────────────────
+# ── 自主进化 第1档: 半自主信号演化（默认关，不改变既有行为）────────
+# 读取信号池 -> 演化候选 -> 落 projects/<domain>/<task>/candidates/ 待审。
+# 用 --review --yes 评审后纳入信号池; --evolve --yes 直通纳入（人审闸门）。
+factor_evolution:
+  enabled: false               # true=演化候选参与信号生成（默认关）
+  generations: 3
+  population_size: 6
+  mutation_rate: 0.3
+  crossover_rate: 0.5
+  elite_keep: 2
+  param_domain:
+    entry_delay: 0
+    stop_loss_pct: 1.5
+    take_profit_pct: 3.0
+    position_size_pct: 0.2
+    window: 20

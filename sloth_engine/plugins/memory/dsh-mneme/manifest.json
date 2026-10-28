@@ -1,0 +1,1 @@
+{"id":"dsh-mneme","version":"0.1.0","type":"memory","entry":"entry.py","extension_points":["tool"],"inject":["semantic-memory"],"lazy":true,"description":"Python port of @modusensus/dsh-mneme (concept): cross-session semantic memory + entity timeline + Markdown mirror"}

@@ -1,0 +1,4 @@
+[
+  {"signal_pattern": "dev-trend", "market_condition": "trend"},
+  {"signal_pattern": "dev-range", "market_condition": "range"}
+]

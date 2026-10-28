@@ -1,0 +1,1 @@
+{"id":"dsh-at-file","version":"0.1.0","type":"skill","entry":"entry.py","extension_points":["tool"],"inject":["at-file"],"lazy":true,"description":"Python port of dsh-at-file (concept): @path resolution + listing against a workspace root (offline glob)"}

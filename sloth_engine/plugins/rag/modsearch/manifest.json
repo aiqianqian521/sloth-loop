@@ -1,0 +1,1 @@
+{"id":"modsearch","version":"0.1.0","type":"rag","entry":"entry.py","extension_points":["tool"],"inject":["web-search"],"lazy":true,"description":"Python port of @nickyxyz/modsearch (concept): pluggable web search + page fetch with offline grep corpus fallback"}

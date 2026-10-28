@@ -1,0 +1,82 @@
+{
+  "exported_at": "2026-08-11T08:54:41.586505",
+  "failure_patterns": [
+    {
+      "id": "F-20260811-001",
+      "date": "2026-08-11",
+      "signal_pattern": "极端位置追单",
+      "market_condition": "H240趋势+H1震荡",
+      "failure_mode": "DIRECTION_BIAS",
+      "impact_trades": 1,
+      "impact_win_rate": "0%",
+      "impact_total_pnl": "-0.91%",
+      "root_cause": "连续同方向偏移，信号方向判断失效",
+      "solution": "待制定",
+      "verification": "待验证",
+      "status": "resolved",
+      "exclusion_rule": "极端位置追单 @ H240趋势+H1震荡",
+      "occurrences": 1,
+      "last_seen": null
+    }
+  ],
+  "success_patterns": [
+    {
+      "id": "S-20260811-001",
+      "date": "2026-08-11",
+      "signal_pattern": "斐波那契过滤趋势确认",
+      "market_condition": "低波动趋势",
+      "entry": "斐波那契过滤趋势确认 确认后回踩不破",
+      "stop_loss": "1.5%",
+      "take_profit": "2.7%",
+      "position_size": "20%",
+      "quarters_tested": 2,
+      "quarters_positive": 2,
+      "avg_sharpe": 0.17,
+      "avg_annual_excess": "1.37%",
+      "status": "candidate",
+      "reuse_rule": "待跨季度验证后制定",
+      "occurrences": 2,
+      "last_seen": "2026-08-11T08:53:51.726793"
+    },
+    {
+      "id": "S-20260811-002",
+      "date": "2026-08-11",
+      "signal_pattern": "区间上沿假突破做多",
+      "market_condition": "H4震荡",
+      "entry": "区间上沿假突破做多 确认后回踩不破",
+      "stop_loss": "1.5%",
+      "take_profit": "1.1%",
+      "position_size": "20%",
+      "quarters_tested": 2,
+      "quarters_positive": 2,
+      "avg_sharpe": 0.17,
+      "avg_annual_excess": "0.54%",
+      "status": "candidate",
+      "reuse_rule": "待跨季度验证后制定",
+      "occurrences": 2,
+      "last_seen": "2026-08-11T08:53:51.764590"
+    }
+  ],
+  "rounds": [
+    {
+      "id": 26,
+      "ts": "2026-08-11T08:53:50.287695",
+      "input_count": 3,
+      "excluded_count": 0,
+      "passed_count": 3,
+      "new_failures": 1,
+      "new_successes": 2,
+      "notes": "ok"
+    },
+    {
+      "id": 27,
+      "ts": "2026-08-11T08:53:51.799323",
+      "input_count": 3,
+      "excluded_count": 1,
+      "passed_count": 2,
+      "new_failures": 0,
+      "new_successes": 0,
+      "notes": "ok"
+    }
+  ]
+}

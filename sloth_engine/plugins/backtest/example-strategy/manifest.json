@@ -1,0 +1,1 @@
+{"id":"example-strategy","version":"0.1.0","type":"backtest","entry":"entry.py","extension_points":["tool"],"inject":[],"lazy":true,"description":"minimal example backtest strategy plugin (drop-in demo)"}

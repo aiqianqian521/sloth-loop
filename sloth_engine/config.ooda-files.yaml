@@ -1,0 +1,63 @@
+runtime:
+  root: "<RUNTIME_ROOT>/w0-w2-filetest"
+  db: "db/patterns.db"
+  io: "io"
+  events: "runs"
+  logs: "logs"
+  state: "state/STATE.md"
+  handoff: "state/handoff.json"
+
+memory:
+  sqlite_path: "db/patterns.db"
+
+loop:
+  signals: "sloth_engine/data/signals_ooda_files.json"
+  batch_size: 4
+  max_rounds: 1
+  max_seconds: 120
+  no_progress_stop: 2
+  error_stop: 2
+  circuit_cooldown_seconds: 10
+
+backtest:
+  script: "backtest/ooda_file_task.py"
+  timeout_sec: 30
+
+ooda:
+  enabled: true
+  annotation_enabled: true
+
+task:
+  name: "ooda-file-verification"
+  success_criteria:
+    - metric: "trades_count"
+      operator: "eq"
+      threshold: 4
+    - metric: "files_created"
+      operator: "eq"
+      threshold: 5
+  verification:
+    mode: "single"
+    assertions:
+      - type: "equals"
+        field: "metrics.files_created"
+        expected: 5
+      - type: "min_size"
+        field: "metrics.manifest"
+        threshold: 80
+  scope:
+    allow: ["backtest/", "sloth_engine/", "io/", "_data/"]
+    deny: ["secrets/", "keys/", "production/", ".env"]
+
+budget:
+  hard:
+    max_rounds: 1
+    max_runtime_minutes: 2
+    max_consecutive_failures: 2
+  soft:
+    max_tokens_per_round: 50000
+    max_sub_agents: 0
+
+stop:
+  completion: ["all_criteria_met", "max_rounds_reached"]
+  safety: ["budget_exhausted", "consecutive_failures", "denylist_hit"]

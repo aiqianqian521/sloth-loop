@@ -1,0 +1,37 @@
+#!/bin/sh
+# sloth-loop fail-closed push gate (cycle-37 A).  Installed by
+# scripts/install_push_gate.py -- do not edit a deployed copy by hand.
+#
+# Trust boundary: this script, the pinned gate bundle beside it and its .env
+# live on the RECEIVING host.  A pusher cannot disable it with --no-verify,
+# core.hooksPath or a fresh clone.  The gate code is never taken from the pushed
+# tree, so pushing a neutered scripts/push_gate.py changes nothing.
+set -eu
+
+HOOK_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+
+# `set -a` so every variable the configuration defines is exported to the gate
+# process; a shell variable that is merely set is NOT inherited by a child.
+if [ -f "$HOOK_DIR/loop-push-gate.env" ]; then
+    set -a
+    # shellcheck disable=SC1091
+    . "$HOOK_DIR/loop-push-gate.env"
+    set +a
+fi
+
+if [ -z "${LOOP_PUSH_GATE_PYTHON:-}" ]; then
+    echo "[push-gate] REJECTED: LOOP_PUSH_GATE_PYTHON is not configured" >&2
+    echo "[push-gate] (run scripts/install_push_gate.py --repo <this repo>)" >&2
+    exit 1
+fi
+
+PY="$LOOP_PUSH_GATE_PYTHON"
+BUNDLE="$HOOK_DIR/loop-push-gate/push_gate.py"
+
+if [ ! -f "$BUNDLE" ]; then
+    echo "[push-gate] REJECTED: gate bundle missing at $BUNDLE" >&2
+    echo "[push-gate] (run scripts/install_push_gate.py --repo <this repo>)" >&2
+    exit 1
+fi
+
+exec "$PY" "$BUNDLE" --stdin --repo .

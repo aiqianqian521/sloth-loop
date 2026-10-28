@@ -1,0 +1,1 @@
+{"id":"dsh-find-plugin","version":"0.1.0","type":"skill","entry":"entry.py","extension_points":["tool"],"inject":["plugin-discovery"],"lazy":true,"description":"Python port of dsh-find-plugin (concept): find/list/validate installed sloth-loop plugins"}

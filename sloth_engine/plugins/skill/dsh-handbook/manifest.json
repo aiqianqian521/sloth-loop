@@ -1,0 +1,1 @@
+{"id":"dsh-handbook","version":"0.1.0","type":"skill","entry":"entry.py","extension_points":["tool"],"inject":["handbook"],"lazy":true,"description":"Python port of dsh-handbook (concept): offline onboarding handbook snippets by topic"}

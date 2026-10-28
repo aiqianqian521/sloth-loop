@@ -1,0 +1,10 @@
+[
+  {"signal_pattern": "Chanlun一买即时入场",    "market_condition": "任意市场"},
+  {"signal_pattern": "Chanlun一买等1根确认",   "market_condition": "任意市场"},
+  {"signal_pattern": "Chanlun一买等2根确认",   "market_condition": "任意市场"},
+  {"signal_pattern": "Fib震荡识别rp=0.01",     "market_condition": "震荡市场"},
+  {"signal_pattern": "Fib震荡识别rp=0.015",    "market_condition": "震荡市场"},
+  {"signal_pattern": "Fib逆势方向判断",        "market_condition": "趋势末端"},
+  {"signal_pattern": "Fib极端位置识别",        "market_condition": "极端波动"},
+  {"signal_pattern": "Fib回撤分档过滤",        "market_condition": "任意市场"}
+]

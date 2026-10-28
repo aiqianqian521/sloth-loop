@@ -1,0 +1,11 @@
+{
+  "_comment": "sloth-loop 当前态测试基线单一来源。run_gate.py 读取本文件校验当前态文档口径一致。",
+  "_rule": "修改测试基线后，先更新本文件，再同步当前态文档（见 docs_baseline.CHECK_FILES）。",
+  "passed": 1760,
+  "xfailed": 0,
+  "coverage": "79.49",
+  "fail_under": 70,
+  "head": "0b8afab",
+  "updated": "2026-10-28",
+  "branch": "dev"
+}

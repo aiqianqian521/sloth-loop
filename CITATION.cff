@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+title: "sloth-loop: an LLM-free, self-evolving task-orchestration engine"
+message: "If you use sloth-loop in academic or production work, please cite it as below."
+type: software
+authors:
+  - family-names: "lv"
+    given-names: "fushuai"
+    alias: "gege-lv"
+version: "4.0-dev"
+date-released: "2026-10-27"
+license: "Apache-2.0"
+repository-code: "https://github.com/gege-lv/sloth-loop"
+url: "https://github.com/gege-lv/sloth-loop"
+abstract: >-
+  sloth-loop turns a repeated analytical workflow (distribute candidates ->
+  run -> judge -> distil rules) into a reusable, self-evolving process.  It is
+  deliberately LLM-free: the engine orchestrates, the mounted agent thinks.
+keywords:
+  - orchestration
+  - ooda
+  - self-evolving
+  - agent
+  - automation

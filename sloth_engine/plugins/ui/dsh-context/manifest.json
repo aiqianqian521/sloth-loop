@@ -1,0 +1,1 @@
+{"id":"dsh-context","version":"0.1.0","type":"ui","entry":"entry.py","extension_points":["tool"],"inject":["context-observability"],"lazy":true,"description":"Python port of dsh-context (concept): loop round context/token observability from event_log"}

@@ -1,0 +1,1 @@
+{"id":"modlens","version":"0.1.0","type":"rag","entry":"entry.py","extension_points":["tool"],"inject":["vision"],"lazy":true,"description":"Python port of modlens (concept): pluggable image description / vision with offline metadata fallback"}

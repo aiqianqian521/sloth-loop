@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loop v2.0 Dashboard</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#f0f2f5;color:#333}
+header{background:#1a1a2e;color:#fff;padding:1em 2em;display:flex;justify-content:space-between;align-items:center}
+header h1{font-size:1.4em} header span{opacity:.7;font-size:.85em}
+nav{background:#16213e;padding:.5em 2em}
+nav a{color:#a0b4d0;text-decoration:none;margin-right:1.5em;font-size:.9em;cursor:pointer}
+nav a:hover,.tab-active{color:#fff}
+main{max-width:1400px;margin:1em auto;padding:0 1em}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1em;margin-bottom:1.5em}
+.card{background:#fff;border-radius:8px;padding:1.2em;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.card h3{font-size:.8em;color:#888;margin-bottom:.5em;text-transform:uppercase}
+.card .val{font-size:2em;font-weight:700;color:#1a1a2e}
+.card .sub{font-size:.8em;color:#888;margin-top:.3em}
+.health-high{color:#2e7d32}.health-medium{color:#f57c00}.health-low{color:#d32f2f}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:1em;margin-bottom:1.5em}
+table{width:100%;border-collapse:collapse;font-size:.9em}
+th,td{padding:.6em .8em;text-align:left;border-bottom:1px solid #eee}
+th{background:#f5f7fa;font-weight:600;color:#555}
+.badge{padding:.2em .6em;border-radius:3px;font-size:.8em;font-weight:600}
+.bg-open{background:#fff3e0;color:#e65100}.bg-resolved{background:#e8f5e9;color:#2e7d32}
+.bg-monitoring{background:#e3f2fd;color:#1565c0}
+.btn{padding:.4em 1em;border:none;border-radius:4px;cursor:pointer;font-size:.85em;margin-right:.3em}
+.btn-ap{background:#2e7d32;color:#fff}.btn-rj{background:#c62828;color:#fff}
+.btn-sm{background:#f5f5f5;color:#333}.loading{text-align:center;padding:2em;color:#888}
+.tab-panel{display:none}.tab-panel.active{display:block}
+.bar-container{background:#eee;border-radius:3px;height:20px;flex:1}
+.bar{height:20px;background:#4a90d9;border-radius:3px;min-width:2px}
+.bar-wrap{display:flex;align-items:center;gap:.5em}
+footer{text-align:center;padding:2em;color:#aaa;font-size:.85em}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>Loop v2.0 Dashboard</h1></div>
+  <span id="clock"></span>
+</header>
+<nav>
+  <a class="tab-active" onclick="switchTab('overview')">Overview</a>
+  <a onclick="switchTab('failures')">Failures</a>
+  <a onclick="switchTab('successes')">Successes</a>
+  <a onclick="switchTab('rules')">Rules</a>
+  <a onclick="switchTab('queue')">Queue</a>
+  <a onclick="switchTab('history')">History</a>
+  <a onclick="switchTab('suggestions')">Suggestions</a>
+</nav>
+<main>
+<div id="tab-overview" class="tab-panel active">
+  <div class="grid" id="stats"></div>
+  <div class="row">
+    <div class="card"><h3>Failure Mode Distribution</h3><div id="mode-chart"></div></div>
+    <div class="card"><h3>Recent Rounds</h3><div id="recent-rounds"></div></div>
+  </div>
+</div>
+<div id="tab-failures" class="tab-panel"><div class="card"><h3>Failure Patterns</h3><div id="failure-list"></div></div></div>
+<div id="tab-successes" class="tab-panel"><div class="card"><h3>Success Patterns</h3><div id="success-list"></div></div></div>
+<div id="tab-rules" class="tab-panel"><div class="card"><h3>Active Exclusion Rules</h3><div id="rules-list"></div></div></div>
+<div id="tab-queue" class="tab-panel"><div class="card"><h3>Problem Queue</h3><div id="queue-list"></div></div></div>
+<div id="tab-history" class="tab-panel"><div class="card"><h3>Run History</h3><div id="run-list"></div></div></div>
+<div id="tab-suggestions" class="tab-panel"><div class="card"><h3>L2 Suggestions</h3><div id="suggestion-list"></div></div></div>
+</main>
+<footer>Loop v2.0 · <span id="footer-info"></span></footer>
+<script>
+const API = '/api';
+
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('tab-active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('tab-active');
+  if(name=='overview') loadDashboard();
+  else if(name=='failures') loadList('/failures','failure-list',renderFailures);
+  else if(name=='successes') loadList('/successes','success-list',renderSuccesses);
+  else if(name=='rules') loadList('/rules','rules-list',renderRules);
+  else if(name=='queue') loadQueue();
+  else if(name=='history') loadList('/runs?limit=30','run-list',renderRuns);
+  else if(name=='suggestions') loadSuggestions();
+}
+
+async function loadDashboard() {
+  const r = await fetch(API+'/dashboard');
+  const d = await r.json();
+  document.getElementById('stats').innerHTML =
+    `<div class="card"><h3>Total Rounds</h3><div class="val">${d.total_rounds}</div></div>`+
+    `<div class="card"><h3>Failures</h3><div class="val">${d.total_failures}</div><div class="sub">${d.open_failures} open</div></div>`+
+    `<div class="card"><h3>Active Rules</h3><div class="val">${d.active_rules}</div></div>`+
+    `<div class="card"><h3>Health</h3><div class="val ${d.health_score>=70?'health-high':d.health_score>=40?'health-medium':'health-low'}">${d.health_score.toFixed(0)}</div></div>`;
+  let chart = '';
+  for(const [k,v] of Object.entries(d.mode_frequency||{}).sort((a,b)=>b[1]-a[1])) {
+    const pct = d.total_failures ? Math.round(v/d.total_failures*100) : 0;
+    chart += `<div style="margin:.4em 0"><small>${k}</small> <span style="float:right">${v}</span>
+      <div class="bar-container"><div class="bar" style="width:${pct}%"></div></div></div>`;
+  }
+  document.getElementById('mode-chart').innerHTML = chart || '<small>No data</small>';
+  const lr = d.last_round;
+  document.getElementById('recent-rounds').innerHTML = lr ?
+    `<table><tr><th>Round</th><th>In</th><th>Excl</th><th>Pass</th><th>NewF</th><th>NewS</th></tr>
+     <tr><td>R${lr.id||'?'}</td><td>${lr.input_count||0}</td><td>${lr.excluded_count||0}</td><td>${lr.passed_count||0}</td><td>${lr.new_failures||0}</td><td>${lr.new_successes||0}</td></tr></table>` : '<small>No rounds yet</small>';
+  document.getElementById('footer-info').textContent = `${d.total_rounds} rounds · ${d.total_failures} failures · Health ${d.health_score.toFixed(0)}`;
+}
+
+async function loadList(url,targetId,renderFn) {
+  document.getElementById(targetId).innerHTML = '<div class="loading">Loading...</div>';
+  const r = await fetch(API+url); const data = await r.json();
+  document.getElementById(targetId).innerHTML = renderFn(data);
+}
+
+function renderFailures(data) {
+  if(!data.length) return '<small>No failure patterns</small>';
+  let h = '<table><tr><th>ID</th><th>Mode</th><th>Signal</th><th>Status</th><th>Confidence</th><th>Actions</th></tr>';
+  data.reverse().forEach(f => {
+    h += `<tr><td>${f.id}</td><td>${f.failure_mode||'?'}</td><td>${(f.signal_pattern||'').slice(0,40)}</td>
+      <td><span class="badge bg-${f.status}">${f.status}</span></td>
+      <td>${(f.fix_confidence||0).toFixed(1)}</td>
+      <td>${f.status=='open'?`<button class="btn btn-ap" onclick="approve('${f.id}')">Resolve</button>`:''}</td></tr>`;
+  });
+  return h + '</table>';
+}
+
+function renderSuccesses(data) {
+  if(!data.length) return '<small>No success patterns</small>';
+  let h = '<table><tr><th>ID</th><th>Signal</th><th>Q Tested</th><th>Q Positive</th><th>Status</th></tr>';
+  data.forEach(s => {
+    h += `<tr><td>${s.id}</td><td>${(s.signal_pattern||'').slice(0,50)}</td><td>${s.quarters_tested||0}</td><td>${s.quarters_positive||0}</td><td><span class="badge bg-${s.status}">${s.status}</span></td></tr>`;
+  });
+  return h + '</table>';
+}
+
+function renderRules(data) {
+  if(!data.length) return '<small>No active rules</small>';
+  let h = '<table><tr><th>ID</th><th>Mode</th><th>Rule</th><th>Status</th><th>Actions</th></tr>';
+  data.forEach(r => {
+    h += `<tr><td>${r.id}</td><td>${r.failure_mode||'?'}</td><td>${(r.exclusion_rule||'').slice(0,60)}</td>
+      <td><span class="badge bg-${r.status}">${r.status}</span></td>
+      <td>${r.status!='resolved'?`<button class="btn btn-ap" onclick="approve('${r.id}')">Approve</button>`:''}
+      ${r.status=='resolved'?`<button class="btn btn-sm" onclick="reject('${r.id}')">Demote</button>`:''}</td></tr>`;
+  });
+  return h + '</table>';
+}
+
+function renderRuns(data) {
+  if(!data.length) return '<small>No run history</small>';
+  let h = '<table><tr><th>ID</th><th>Task</th><th>Rounds</th><th>Stop Reason</th><th>Health</th><th>Verdict</th></tr>';
+  data.forEach(r => {
+    h += `<tr><td>${(r.id||'').slice(0,16)}</td><td>${r.task||'?'}</td><td>${r.total_rounds||0}</td><td>${(r.stop_reason||'').slice(0,30)}</td><td>${(r.l2_health_score||0).toFixed(0)}</td><td>${r.verdict||'?'}</td></tr>`;
+  });
+  return h + '</table>';
+}
+
+async function loadQueue() {
+  const r = await fetch(API+'/queue'); const d = await r.json();
+  let h = `<table><tr><th>Queue Stats</th><td>Total: ${d.stats.total}</td><td>`;
+  for(const [k,v] of Object.entries(d.stats.by_status||{})) h += `${k}:${v} `;
+  h += `</td></tr></table><br>`;
+  if(!d.items.length) h += '<small>No queued problems</small>';
+  else {
+    h += '<table><tr><th>ID</th><th>Type</th><th>Severity</th><th>Recurrence</th><th>Evidence</th><th>Action</th></tr>';
+    d.items.forEach(p => {
+      h += `<tr><td>${p.id}</td><td>${p.type}</td><td>${p.severity}</td><td>${p.recurrence_count||1}</td>
+        <td>${(p.evidence||'').slice(0,50)}</td><td><button class="btn btn-sm" onclick="dismissProblem('${p.id}')">Dismiss</button></td></tr>`;
+    });
+    h += '</table>';
+  }
+  document.getElementById('queue-list').innerHTML = h;
+}
+
+async function loadSuggestions() {
+  const r = await fetch(API+'/suggestions'); const data = await r.json();
+  if(!data.length) {document.getElementById('suggestion-list').innerHTML='<small>No pending suggestions</small>';return;}
+  let h = '<table><tr><th>ID</th><th>Category</th><th>Suggestion</th><th>Auto</th><th>Confidence</th><th>Action</th></tr>';
+  data.forEach(s => {
+    h += `<tr><td>${s.id}</td><td>${s.category||'?'}</td><td>${(s.suggestion||'').slice(0,60)}</td>
+      <td>${s.auto_applicable?'Yes':'No'}</td><td>${(s.confidence||0).toFixed(1)}</td>
+      <td><button class="btn btn-ap" onclick="applySuggestion('${s.id}')">Apply</button></td></tr>`;
+  });
+  document.getElementById('suggestion-list').innerHTML = h + '</table>';
+}
+
+async function approve(id) {
+  await fetch(API+'/rules/'+id+'/approve',{method:'POST'});
+  loadDashboard(); switchTab(document.querySelector('.tab-active')?.textContent?.toLowerCase()||'overview');
+  document.querySelectorAll('nav a')[0].click();
+}
+async function reject(id) {
+  await fetch(API+'/rules/'+id+'/reject',{method:'POST'});
+  switchTab('rules');
+}
+async function dismissProblem(id) {
+  await fetch(API+'/queue/'+id,{method:'DELETE'});
+  loadQueue();
+}
+async function applySuggestion(id) {
+  await fetch(API+'/suggestions/'+id+'/apply',{method:'POST'});
+  loadSuggestions();
+}
+
+document.getElementById('clock').textContent = new Date().toLocaleString();
+setInterval(()=>document.getElementById('clock').textContent=new Date().toLocaleString(),30000);
+loadDashboard();
+</script>
+</body>
+</html>

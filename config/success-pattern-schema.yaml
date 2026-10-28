@@ -1,0 +1,31 @@
+# 成功信号模式 - YAML Schema
+
+# 每条成功记录的结构定义
+# 存储位置: <KB_ROOT>\40-验证与风险\成功信号模式库.md
+
+- id: "S-YYYYMMDD-NNN"            # 唯一ID，格式S-日期-序号
+  date: "YYYY-MM-DD"               # 发现日期
+  signal_pattern: ""               # 信号类型描述
+  market_condition: ""             # 市场条件描述
+  parameters:                      # 有效参数集
+    entry: ""                      # 入场条件
+    stop_loss: ""                  # 止损参数
+    take_profit: ""                # 止盈参数
+    position_size: ""              # 仓位参数
+  performance:                     # 历史表现
+    quarters_tested: 0             # 测试季度数
+    quarters_positive: 0           # 正超额季度数
+    avg_sharpe: 0.0                # 平均夏普
+    avg_annual_excess: "0.0%"      # 平均年化超额
+    avg_ic: "0.0%"                 # 平均IC绝对值（可选）
+    max_drawdown: "0.0%"           # 最大回撤（可选）
+  stability:                       # 稳定性指标（可选）
+    ic_serial_correlation: 0.0     # IC序列相关性（越低越好）
+    cross_quarter_consistency: "0%" # 跨季度一致率
+  status: ""                       # 状态：confirmed|candidate|deprecated
+  reuse_rule: ""                   # 复用规则描述（下次回测如何加载）
+
+# status 枚举值：
+#   confirmed   - 已确认，≥5季度中≥3季度正超额，作为参数起点
+#   candidate   - 候选，尚未达到确认标准
+#   deprecated  - 已废弃，稳定性下降或已被更好的模式替代
