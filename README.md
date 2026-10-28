@@ -108,3 +108,25 @@ loop 的本质不是「某一次跑出指标」，而是**把一个对象的「�
   保留可复用，将来按`<KB_ROOT>/sloth-loop自主进化后续计划-2026-09-02.md`唤醒。
 - **后续扩展（规划，未实现）**：AI Team / 蜂群编排层（roster 链）+ 自主进化，见 [docs/sloth-loop-AI-TEAM-AND-SELF-EVOLUTION.md](docs/sloth-loop-AI-TEAM-AND-SELF-EVOLUTION.md)（ROADMAP 触发条件见 docs/sloth-loop-ROADMAP.md §4b）。
 - 详细介绍：docs/sloth-loop-项目介绍与规划.md（全景架构图、使用者视角、成功判定、上下文实现、接入规范）。
+
+## 配套 Skill 仓库（关联项目）
+
+本项目是「身体」——零 LLM 的编排状态机；「能力」由下面 4 个独立的 skill 仓库提供。为避免版本互相绑架，它们以 **git submodule** 形式挂在 `skills/` 下，各自独立迭代、按需 pin 版本。
+
+| submodule 路径 | 仓库 | 在本项目里的角色 |
+|---|---|---|
+| `skills/architect-skills` | [aiqianqian521/architect-skills](https://github.com/aiqianqian521/architect-skills) | 18 维度架构评估 atom + 路由编排（Agent / RAG / 安全 / 合规 / 可观测性…） |
+| `skills/obsidian-skills` | [aiqianqian521/obsidian-skills](https://github.com/aiqianqian521/obsidian-skills) | Obsidian 知识库的采集 / 整理 / 查询 / 索引 |
+| `skills/ooda` | [aiqianqian521/ooda](https://github.com/aiqianqian521/ooda) | OODA 执行循环纪律（Observe→Orient→Decide→Act 直到收敛） |
+| `skills/ai-skill-output-template` | [aiqianqian521/ai-skill-output-template](https://github.com/aiqianqian521/ai-skill-output-template) | 统一 skill 输出模板（声明式多模板注册中心） |
+
+一键克隆主仓 + 全部 skill：
+
+```bash
+git clone --recurse-submodules https://github.com/aiqianqian521/sloth-loop.git
+# 已有仓库补齐 / 更新子模块
+git submodule update --init --recursive
+git submodule update --remote --merge   # 拉取各 skill 最新主干
+```
+
+> 边界不变：`sloth-loop` 自身不发起任何 LLM 调用，skill 只提供流程与提示词资产，思考仍由挂载它的 Agent 承担。
