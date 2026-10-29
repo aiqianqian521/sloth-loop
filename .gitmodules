@@ -6,7 +6,7 @@
 	url = https://github.com/aiqianqian521/obsidian-skills.git
 [submodule "skills/ooda"]
 	path = skills/ooda
-	url = https://github.com/aiqianqian521/ooda.git
+	url = https://github.com/aiqianqian521/ooda_skill.git
 [submodule "skills/ai-skill-output-template"]
 	path = skills/ai-skill-output-template
 	url = https://github.com/aiqianqian521/ai-skill-output-template.git
