@@ -115,7 +115,7 @@ loop 的本质不是「某一次跑出指标」，而是**把一个对象的「�
 
 | submodule 路径 | 仓库 | 在本项目里的角色 |
 |---|---|---|
-| `skills/architect-skills` | [aiqianqian521/architect-skills](https://github.com/aiqianqian521/architect-skills) | 18 维度架构评估 atom + 路由编排（Agent / RAG / 安全 / 合规 / 可观测性…） |
+| `skills/architect-skills` | [aiqianqian521/architect-skills](https://github.com/aiqianqian521/architect-skills) | 19 个架构评估 skill：18 个维度 atom + 1 个路由编排（Agent / RAG / 安全 / 合规 / 可观测性…） |
 | `skills/obsidian-skills` | [aiqianqian521/obsidian-skills](https://github.com/aiqianqian521/obsidian-skills) | Obsidian 知识库的采集 / 整理 / 查询 / 索引 |
 | `skills/ooda` | [aiqianqian521/ooda_skill](https://github.com/aiqianqian521/ooda_skill) | OODA 执行循环纪律（Observe→Orient→Decide→Act 直到收敛） |
 | `skills/ai-skill-output-template` | [aiqianqian521/ai-skill-output-template](https://github.com/aiqianqian521/ai-skill-output-template) | 统一 skill 输出模板（声明式多模板注册中心） |
@@ -130,3 +130,5 @@ git submodule update --remote --merge   # 拉取各 skill 最新主干
 ```
 
 > 边界不变：`sloth-loop` 自身不发起任何 LLM 调用，skill 只提供流程与提示词资产，思考仍由挂载它的 Agent 承担。
+>
+> 互链：上面 4 个仓库的 README 里都有「配套项目」区块反向链接回本仓——本仓是这组 skill 的编排入口与唯一消费方。
