@@ -117,7 +117,7 @@ loop 的本质不是「某一次跑出指标」，而是**把一个对象的「�
 |---|---|---|
 | `skills/architect-skills` | [aiqianqian521/architect-skills](https://github.com/aiqianqian521/architect-skills) | 18 维度架构评估 atom + 路由编排（Agent / RAG / 安全 / 合规 / 可观测性…） |
 | `skills/obsidian-skills` | [aiqianqian521/obsidian-skills](https://github.com/aiqianqian521/obsidian-skills) | Obsidian 知识库的采集 / 整理 / 查询 / 索引 |
-| `skills/ooda` | [aiqianqian521/ooda](https://github.com/aiqianqian521/ooda) | OODA 执行循环纪律（Observe→Orient→Decide→Act 直到收敛） |
+| `skills/ooda` | [aiqianqian521/ooda_skill](https://github.com/aiqianqian521/ooda_skill) | OODA 执行循环纪律（Observe→Orient→Decide→Act 直到收敛） |
 | `skills/ai-skill-output-template` | [aiqianqian521/ai-skill-output-template](https://github.com/aiqianqian521/ai-skill-output-template) | 统一 skill 输出模板（声明式多模板注册中心） |
 
 一键克隆主仓 + 全部 skill：
