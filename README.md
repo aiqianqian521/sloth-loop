@@ -120,6 +120,8 @@ loop 的本质不是「某一次跑出指标」，而是**把一个对象的「�
 | `skills/ooda` | [aiqianqian521/ooda_skill](https://github.com/aiqianqian521/ooda_skill) | OODA 执行循环纪律（Observe→Orient→Decide→Act 直到收敛） |
 | `skills/ai-skill-output-template` | [aiqianqian521/ai-skill-output-template](https://github.com/aiqianqian521/ai-skill-output-template) | 统一 skill 输出模板（声明式多模板注册中心） |
 
+同生态但**未作为 submodule 挂载**的仓库：[aiqianqian521/go-sec-audit](https://github.com/aiqianqian521/go-sec-audit) —— Go 源码安全审计 skill（L0→L3 证据门判决），可作为一类任务域接入。
+
 一键克隆主仓 + 全部 skill：
 
 ```bash
